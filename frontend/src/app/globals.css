@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .home {
+    background-image: url('../../public/img/background.jpg')
+  }
+}
