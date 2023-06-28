@@ -12,11 +12,11 @@ const UserSession = () => {
     return (
         <div className='z-[100] w-[500px] max-w-[600px] h-[500px] bg-white rounded-2xl justify-center items-center flex shadow-card'>
             <div className='w-[96%] h-[96%] rounded-2xl flex justify-center items-center flex-col'>
-                <div className='shadow-home pb-8 w-full flex gap-2 items-center justify-center'>
-                    <div>
+                <div className='pb-8 w-full flex gap-2 items-center justify-center'>
+                    <div className="pt-[6px]">
                         <Image src={logo} width={50} height={50} alt='' />
                     </div>
-                    <p className='text-[40px] font-semibold'>taskbook</p>
+                    <p className='text-[46px] font-medium family-pacifico'>taskbook</p>
                 </div>
                 <div className='w-[96%] h-max pb-[10px] pt-[20px]'>
                     {registered ?

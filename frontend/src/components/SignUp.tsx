@@ -6,28 +6,34 @@ import React from 'react';
 const SignUp = () => {
 
     const initialValues: any = {
+        email: "",
+        name: "",
+        lastname: "",
+        password: "",
+    }
+
+    const placeholder: any = {
         email: 'example@email.com',
         name: 'John',
         lastname: 'Doe',
-        password: '************',
+        password: 'Password',
     }
 
     const form = useForm({ initialValues });
-    const handleSubmit = () => {
-
+    const handleSubmit = (event: any) => {
+        event.preventDefault()
+        console.log(form.fields)
     }
 
-    console.log(form)
-
     return (
-        <form className='flex flex-col px-[20px] gap-2'>
-            <input type='email' {...form.getInput('email')} placeholder={initialValues.email} className='border-[2px] border-[#1F618D] rounded-md p-2'></input>
+        <form onSubmit={handleSubmit} className='flex flex-col px-[20px] gap-2'>
+            <input required type='email' {...form.getInput('email')} placeholder={placeholder.email} className='border-[2px] border-[#1F618D] rounded-md p-2'></input>
             <div className="flex w-[100%] gap-2">
-                <input type='text' {...form.getInput('name')} placeholder={initialValues.name} className='w-[50%] border-[2px] border-[#1F618D] rounded-md p-2'></input>
-                <input type='text' {...form.getInput('lastname')} placeholder={initialValues.lastname} className='w-[50%] border-[2px] border-[#1F618D] rounded-md p-2'></input>
+                <input required type='text' {...form.getInput('name')} placeholder={placeholder.name} className='w-[50%] border-[2px] border-[#1F618D] rounded-md p-2'></input>
+                <input required type='text' {...form.getInput('lastname')} placeholder={placeholder.lastname} className='w-[50%] border-[2px] border-[#1F618D] rounded-md p-2'></input>
             </div>
-            <input type='password' {...form.getInput('password')} placeholder={initialValues.password} className='border-[2px] border-[#1F618D] rounded-md p-2'></input>
-            <Button variant="contained" className='bg-[#1F618D]'>Sign Up In</Button>
+            <input required type='password' {...form.getInput('password')} placeholder={placeholder.password} alt="strongPass" className='border-[2px] border-[#1F618D] rounded-md p-2'></input>
+            <Button type='submit' variant="contained" className='bg-[#1F618D]'>Sign Up</Button>
         </form>
     )
 }
