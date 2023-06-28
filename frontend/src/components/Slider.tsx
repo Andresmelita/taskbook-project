@@ -26,10 +26,6 @@ export default function Slider() {
         setClickAppear(true);
     };
 
-    // if (width < 1536) {
-    //     setSlidesView(3)
-    // } else setSlidesView(4)
-
     return (
         <div className="flex h-[100%] relative justify-center items-center">
             <div
