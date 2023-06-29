@@ -27,7 +27,7 @@ export default function Slider() {
     };
 
     return (
-        <div className="flex h-[100%] relative justify-center items-center">
+        <div className="flex h-[100%] relative justify-center items-center border-b-[2px] border-b-[#777]">
             <div
                 ref={prevRef}
                 className={
