@@ -9,7 +9,7 @@ const Navbar = () => {
     const [isLogin, setIsLogin] = useState<Boolean>(false)
 
     return (
-        <div className='navbar px-[30px] fixed h-[56px] w-[100%] bg-[#1c5285] z-[110]'>
+        <header className='navbar px-[30px] fixed h-[56px] w-[100%] bg-[#1c5285] z-[110]'>
             {isLogin ? 
             < div className='flex justify-between items-center h-[100%] w-[100%]'>
                 <div className='text-[#fff] shadow-text'>
@@ -18,7 +18,7 @@ const Navbar = () => {
                 </div>
                 <div className='flex gap-3 shadow-text text-[#fff] items-center'>
                     <p className='text-[16px] cursor-pointer' onClick={() => setIsLogin(false)}>example@email.com</p>
-                    <AccountCircleTwoToneIcon className='text-[34px]' />
+                    {/* <AccountCircleTwoToneIcon className='text-[34px]' /> */}
                 </div>
             </div> : 
             <div className='flex justify-between items-center h-[100%] w-[100%]'>
@@ -28,10 +28,10 @@ const Navbar = () => {
                 </div>
                 <div className='flex gap-3 shadow-text text-[#fff] items-center'>
                     <p className='text-[16px] cursor-pointer' onClick={() => setIsLogin(true)}>Create an Account</p>
-                    <AccountCircleTwoToneIcon className='text-[34px]' />
+                    {/* <AccountCircleTwoToneIcon className='text-[34px]' /> */}
                 </div>
             </div>}
-        </div >
+        </header>
     )
 }
 

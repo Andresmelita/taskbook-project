@@ -10,12 +10,10 @@ interface Props {
 
 const NestedLayout = ({children, title, description}: Props) => {
     return (
-        <div>
-            <title>{title}</title>
-            <meta name='description' content={description}></meta>
+        <>
             <Navbar/>
             {children}
-        </div>
+        </>
     )
 }
 
