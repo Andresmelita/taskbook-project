@@ -1,3 +1,4 @@
+'use client'
 import React, { useRef, useState } from 'react'
 import DrawIcon from '@mui/icons-material/Draw';
 import AddBoxIcon from '@mui/icons-material/AddBox';

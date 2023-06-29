@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react'
 import DrawIcon from '@mui/icons-material/Draw';
 import dayjs, { Dayjs } from 'dayjs';

@@ -21,7 +21,7 @@ const Login = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className='flex flex-col px-[20px] gap-2'>
+    <form onSubmit={handleSubmit} action={'http://localhost:5000/login'} method='POST' className='flex flex-col px-[20px] gap-2'>
       <input required type='email' {...form.getInput('email')} placeholder={placeholder.email} className='border-[2px] border-[#1F618D] rounded-md p-2'></input>
       <input required type='password' {...form.getInput('password')} placeholder={placeholder.password} className='border-[2px] border-[#1F618D] rounded-md p-2'></input>
       <Button type='submit' variant="contained" className='bg-[#1F618D]'>Log In</Button>

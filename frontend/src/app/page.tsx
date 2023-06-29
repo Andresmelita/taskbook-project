@@ -1,3 +1,4 @@
+'use client'
 import Footer from '@/components/Footer'
 import NestedLayout from '@/layout/NestedLayout'
 import Image from 'next/legacy/image'
@@ -21,3 +22,5 @@ export default function App() {
     </NestedLayout>
   )
 }
+
+
