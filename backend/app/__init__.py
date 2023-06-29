@@ -5,7 +5,7 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/tasks.db'
 db = SQLAlchemy(app)
-# CORS(app, resources={r"/users/*":{"origins": "http://localhost:"}})
+CORS(app, resources={r"/users/*":{"origins": "http://localhost:"}})
 CORS(app)
 
 class Task(db.Model):
