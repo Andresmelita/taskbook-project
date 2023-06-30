@@ -9,26 +9,17 @@ interface User {
 }
 
 const UserBoard = ({ data }: any) => {
-
-    const API = 'http://localhost:5000/users'
+    const API = 'http://localhost:5000/users';
     const [dataUser, setDataUser] = useState<Array<User>>([]);
 
     const users = async () => {
-        const res = await fetch(API)
+        const res = await fetch(API);
         const data = await res.json();
-        setDataUser(data.users)
-    }
-    // window.addEventListener("load", function () {
-    //     users();
-    // })
+        setDataUser(data.users);
+    };
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            window.addEventListener("load", users);
-            return () => {
-                window.removeEventListener("load", users);
-            };
-        }
+        users();
     }, []);
 
     return (
@@ -57,6 +48,7 @@ const UserBoard = ({ data }: any) => {
         </div>
     )
 }
+
 
 export default UserBoard
 
