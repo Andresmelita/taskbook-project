@@ -18,9 +18,18 @@ const UserBoard = ({ data }: any) => {
         const data = await res.json();
         setDataUser(data.users)
     }
-    window.addEventListener("load", function () {
-        users();
-    })
+    // window.addEventListener("load", function () {
+    //     users();
+    // })
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            window.addEventListener("load", users);
+            return () => {
+                window.removeEventListener("load", users);
+            };
+        }
+    }, []);
 
     return (
         <div className='xl:w-[88%] lg:w-[84%] md:w-[78%] w-[100%] h-[100%] bg-[#1c5285] p-[12px] pt-[70px]'>
