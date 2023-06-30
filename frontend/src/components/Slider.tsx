@@ -28,7 +28,7 @@ export default function Slider() {
     };
 
     return (
-        <div className="flex h-[100%] relative justify-center items-center border-b-[2px] border-b-[#777]">
+        <div className="flex h-[100%] relative justify-center items-center border-b-[2px] border-b-[#7777773b]">
             <div
                 ref={prevRef}
                 className={
@@ -58,7 +58,7 @@ export default function Slider() {
                 modules={[Navigation]}
                 className="mySwiper swiper flex flex-row"
             >
-                <div>
+                <div id='tasks'>
                     {tasks?.map((data, index) => {
                         return (
                             <SwiperSlide key={tasks[index].index} className="swiper-slide py-[16px] flex justify-center items-center">

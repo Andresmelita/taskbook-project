@@ -29,6 +29,7 @@ import {
     AccordionHeader,
     AccordionBody,
 } from "@material-tailwind/react";
+import { successAlert, successLogout } from '../../services/alertServicies';
 
 type Anchor = 'bottom'
 
@@ -110,6 +111,16 @@ const SideBar = () => {
         setOpen(open === value ? 0 : value);
     };
 
+    const handleExit = () => {
+        localStorage.removeItem('login')
+        localStorage.removeItem('email')
+        setTimeout(function () {
+            window.location.href = '/';
+        }, 2200);
+        successLogout()
+    }
+
+
 
 
     return (
@@ -142,9 +153,15 @@ const SideBar = () => {
                             <li className="flex gap-3 py-[10px] duration-400 rounded-r-[8px] cursor-pointer ease-in-out duration-300 hover:bg-[#1c5285] hover:shadow-card overflow-hidden"><div className='w-[6px] h-[28px] rounded-r-[6px] bg-[#fff]'></div><ErrorOutlineIcon /><p className='hover:scale-110 ease-in-out duration-300 text-[16px] '>Tasks</p></li>
                         </ul>
                     </div>
-                    <div className="w-[100%] pl-[20px] pr-[10px] text-[#fff] flex justify-between">
-                        <SettingsIcon className="text-[28px] animate-spin cursor-pointer" />
-                        <ExitToAppIcon className='text-[28px] cursor-pointer' />
+                    <div className="w-[100%] pl-[20px] pr-[10px] text-[#fff] flex justify-between items-end">
+                        <div>
+                            <SettingsIcon className="text-[28px] animate-spin cursor-pointer" />
+                        </div>
+
+                        <div className='hover:text-[32px] ease-in-out duration-300 '>
+                            <ExitToAppIcon className='text-[28px] cursor-pointer' onClick={handleExit} />
+                            </div>
+
                     </div>
                 </div>
             </div>

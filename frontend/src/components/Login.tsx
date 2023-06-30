@@ -48,12 +48,12 @@ const Login = () => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault()
-    console.log(form.fields.email)
     dataUser?.map((user: any) => {
-      if (form.fields.email === user.email) {
+      if (user.email === form.fields.email) {
         if (user.password === form.fields.password) {
           successAlert();
           localStorage.setItem('login', 'active')
+          localStorage.setItem('email', user.email)
           setTimeout(function () {
             window.location.href = '/user';
           }, 2200);
@@ -67,17 +67,7 @@ const Login = () => {
             timer: 2000,
           });
         }
-      } else {
-        Swal.fire({
-          position: 'top',
-          toast: true,
-          icon: 'error',
-          title: 'Datos Incorrectos',
-          showConfirmButton: false,
-          timer: 2000,
-        });
-      }
-
+      } 
     })
   }
 
