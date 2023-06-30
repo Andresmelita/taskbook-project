@@ -1,15 +1,28 @@
-# from flask_script import Manager
-# from app import initialize_app
+import click
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
-# app = initialize_app()
-# manager = Manager(app)
+app = Flask(__name__)
+cors = CORS(app, resources={r"/users/*": {"origins": "*"}})
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/tasks.db'
+db = SQLAlchemy(app)
 
-# @manager.command
-# def runserver():
-#     """ Running the app """
-#     port = int(os.getenv("FLASK_PORT", "3000"))
-#     host = os.getenv("FLASK_HOST", "0.0.0.0")
-#     app.run(host=host, port=port)
+@app.route('/')
+def home():
+    return 'Hello World'
 
-# if __name__ == '__main__':
-#     manager.run()
+@app.route('/users', methods=['GET'])
+def users():
+    return {'users': [{'userId': 1, 'id': 1, 'title': 'titulo 1', 'body': 'descripción 1'}, {'userId': 2, 'id': 2, 'title': 'titulo 2', 'body': 'descripción 2'}, {'userId': 3, 'id': 3, 'title': 'titulo 3', 'body': 'descripción 3'}]}
+
+#decorar las funciones con @with_appcontext si requieren acceso al contexto de la aplicación Flask.
+#definir comando personalizado
+@app.cli.command()
+def createdb():
+    """Create the database tables."""
+    db.create_all()
+    click.echo('Database created!')
+
+if __name__ == '__main__':
+    app.run(debug=True)
