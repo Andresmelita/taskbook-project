@@ -11,15 +11,33 @@ interface User {
 const UserBoard = ({ data }: any) => {
     const API = 'http://localhost:5000/users';
     const [dataUser, setDataUser] = useState<Array<User>>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
-    const users = async () => {
-        const res = await fetch(API);
-        const data = await res.json();
-        setDataUser(data.users);
+    // const users = async () => {
+    //     const res = await fetch(API);
+    //     const data = await res.json();
+    //     setDataUser(data.users);
+    // };
+
+    const fetchUsers = async () => {
+        try {
+            const res = await fetch(API);
+            const data = await res.json();
+            setDataUser(data.users);
+        } catch (error) {
+            setError(true);
+        } finally {
+            setLoading(false);
+        }
     };
 
+    // useEffect(() => {
+    //     users();
+    // }, []);
+
     useEffect(() => {
-        users();
+        fetchUsers();
     }, []);
 
     return (
@@ -33,10 +51,15 @@ const UserBoard = ({ data }: any) => {
                             {/* {
                                 dataUser?.[0]?.title
                             } */}
-                            {
+                            {loading ? (
+                                <div>Loading...</div>
+
+                            ) : error ? (
+                                <div>Error occurred while fetching data.</div>
+                            ) : (
                                 dataUser?.map((user: any) => {
                                     return <div key={user.id}>{user.title}</div>;
-                                })
+                                }))
                             }
                         </div>
                     </div>
