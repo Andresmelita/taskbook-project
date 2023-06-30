@@ -8,17 +8,11 @@ interface User {
     // Other properties of the User object
 }
 
-const UserBoard = ({ data }: any) => {
-    const API = 'http://localhost:5000/users';
+const UserBoard = () => {
+    const API = 'http://localhost:5000/api/v1/users';
     const [dataUser, setDataUser] = useState<Array<User>>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-
-    // const users = async () => {
-    //     const res = await fetch(API);
-    //     const data = await res.json();
-    //     setDataUser(data.users);
-    // };
 
     const fetchUsers = async () => {
         try {
@@ -31,10 +25,6 @@ const UserBoard = ({ data }: any) => {
             setLoading(false);
         }
     };
-
-    // useEffect(() => {
-    //     users();
-    // }, []);
 
     useEffect(() => {
         fetchUsers();
@@ -58,7 +48,7 @@ const UserBoard = ({ data }: any) => {
                                 <div>Error occurred while fetching data.</div>
                             ) : (
                                 dataUser?.map((user: any) => {
-                                    return <div key={user.id}>{user.title}</div>;
+                                    return <div key={user.id}>{user.name}</div>;
                                 }))
                             }
                         </div>

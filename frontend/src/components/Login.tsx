@@ -1,8 +1,38 @@
 'use client'
 import useForm from '@/hooks/useForm';
 import Button from '@mui/material/Button';
+import { ok } from 'assert';
+import { useEffect, useState } from 'react';
+import { successAlert } from '../../services/alertServicies';
+import Swal from 'sweetalert2';
+
+interface User {
+  email: string;
+  password: string;
+}
 
 const Login = () => {
+  const API = 'http://localhost:5000/api/v1/users';
+  const [dataUser, setDataUser] = useState<Array<User>>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch(API);
+      const data = await res.json();
+      setDataUser(data.users);
+      console.log(dataUser)
+    } catch (error) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
 
   const initialValues: any = {
     email: "",
@@ -15,9 +45,40 @@ const Login = () => {
   }
 
   const form = useForm({ initialValues });
+
   const handleSubmit = (event: any) => {
     event.preventDefault()
-    console.log(form.fields)
+    console.log(form.fields.email)
+    dataUser?.map((user: any) => {
+      if (form.fields.email === user.email) {
+        if (user.password === form.fields.password) {
+          successAlert();
+          localStorage.setItem('login', 'active')
+          setTimeout(function () {
+            window.location.href = '/user';
+          }, 2200);
+        } else {
+          Swal.fire({
+            position: 'top',
+            toast: true,
+            icon: 'error',
+            title: 'Datos Incorrectos',
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        }
+      } else {
+        Swal.fire({
+          position: 'top',
+          toast: true,
+          icon: 'error',
+          title: 'Datos Incorrectos',
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+
+    })
   }
 
   return (
