@@ -23,9 +23,6 @@ const BookBoard = () => {
 
     }
 
-    console.log(form)
-    console.log(dataUser)
-
     // function saveTask(event: any) {
     //     event.preventDefault()
     //     const titleElement = document.getElementById('title') as HTMLInputElement;
