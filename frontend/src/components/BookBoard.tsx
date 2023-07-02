@@ -19,7 +19,7 @@ const BookBoard = () => {
     }
     const form = useForm({ initialValues });
 
-    const handleSubmit= ()=> {
+    const handleSubmit = () => {
 
     }
 
@@ -47,12 +47,6 @@ const BookBoard = () => {
     //     tasks.push(task);
     //     localStorage.setItem('tasks', JSON.stringify(tasks))
     // }
-
-
-
-
-
-
     return (
         <div className="h-[96%] w-[98%] flex flex-col rounded-[20px]">
             <div className='w-[100%] lg:h-[30%] h-[40%] px-[10px] pt-[10px] flex justify-center'>
@@ -61,7 +55,15 @@ const BookBoard = () => {
                         <div className="flex md:hidden">
                         </div>
                     </div> */}
-                    <form className="w-[100%] h-[100%]" id='formTask' onSubmit={handleSubmit}>
+                    <form action='http://127.0.0.1:5000/addrec' method="POST" className='flex flex-col gap-4 p-4 justify-center'>
+                        <h3>Please Add the New Student Information:</h3>
+                        <input type="text" name="nm" placeholder='Name' />
+                        <textarea name="add" placeholder='Address'></textarea>
+                        <input type="text" name="city" placeholder='City' />
+                        <input type="text" name="zip" placeholder='Zip code' />
+                        <button type="submit" value="Submit" className='bg-[#777] border-[2px] text-[#fff] border-[#fff]'>Submit</button>
+                    </form>
+                    {/* <form className="w-[100%] h-[100%]" id='formTask' onSubmit={handleSubmit}>
                         <div className='font-bold text-[#1c5285] flex justify-center text-[16px] w-[100%] pl-[10px] hover:scale-110 ease-in-out duration-300'>
                             <button type="submit" className='cursor-pointer py-[10px]'>
                                 Agregar Tarea
@@ -74,7 +76,7 @@ const BookBoard = () => {
                         <div className="form-group h-[50%] w-[100%] flex items-center justify-center">
                             <textarea {...form.getInput('description')} id="description" placeholder="Add a description" className="h-[90%] w-[80%] p-[6px] rounded-[10px] form-control"></textarea>
                         </div>
-                    </form>
+                    </form> */}
 
                 </div>
                 {/* <div className="hover:scale-110 ease-in-out duration-300 ">
