@@ -12,26 +12,26 @@ interface User {
 }
 
 const Login = () => {
-  const API = 'http://localhost:5000/api/v1/users';
-  const [dataUser, setDataUser] = useState<Array<User>>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  // const API = 'http://localhost:5000/api/v1/users';
+  // const [dataUser, setDataUser] = useState<Array<User>>([]);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(false);
 
-  const fetchUsers = async () => {
-    try {
-      const res = await fetch(API);
-      const data = await res.json();
-      setDataUser(data.users);
-      console.log(dataUser)
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  // const fetchUsers = async () => {
+  //   try {
+  //     const res = await fetch(API);
+  //     const data = await res.json();
+  //     setDataUser(data.users);
+  //     console.log(dataUser)
+  //   } catch (error) {
+  //     setError(true);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchUsers();
+  // }, []);
 
 
   const initialValues: any = {
@@ -46,33 +46,33 @@ const Login = () => {
 
   const form = useForm({ initialValues });
 
-  const handleSubmit = (event: any) => {
-    event.preventDefault()
-    dataUser?.map((user: any) => {
-      if (user.email === form.fields.email) {
-        if (user.password === form.fields.password) {
-          successAlert();
-          localStorage.setItem('login', 'active')
-          localStorage.setItem('email', user.email)
-          setTimeout(function () {
-            window.location.href = '/user';
-          }, 2200);
-        } else {
-          Swal.fire({
-            position: 'top',
-            toast: true,
-            icon: 'error',
-            title: 'Datos Incorrectos',
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        }
-      } 
-    })
-  }
+  // const handleSubmit = (event: any) => {
+  //   event.preventDefault()
+  //   dataUser?.map((user: any) => {
+  //     if (user.email === form.fields.email) {
+  //       if (user.password === form.fields.password) {
+  //         successAlert();
+  //         localStorage.setItem('login', 'active')
+  //         localStorage.setItem('email', user.email)
+  //         setTimeout(function () {
+  //           window.location.href = '/user';
+  //         }, 2200);
+  //       } else {
+  //         Swal.fire({
+  //           position: 'top',
+  //           toast: true,
+  //           icon: 'error',
+  //           title: 'Datos Incorrectos',
+  //           showConfirmButton: false,
+  //           timer: 2000,
+  //         });
+  //       }
+  //     } 
+  //   })
+  // }
 
   return (
-    <form onSubmit={handleSubmit} action={'http://localhost:5000/login'} method='POST' className='flex flex-col px-[20px] gap-2'>
+    <form  action={'http://localhost:5000/login'} method='POST' className='flex flex-col px-[20px] gap-2'>
       <input required type='email' {...form.getInput('email')} placeholder={placeholder.email} className='border-[2px] border-[#1F618D] rounded-md p-2'></input>
       <input required type='password' {...form.getInput('password')} placeholder={placeholder.password} className='border-[2px] border-[#1F618D] rounded-md p-2'></input>
       <Button type='submit' variant="contained" className='bg-[#1F618D]'>Log In</Button>
