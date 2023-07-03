@@ -9,26 +9,26 @@ interface User {
 }
 
 const UserBoard = () => {
-    const API = 'http://localhost:5000/api/v1/users';
-    const [dataUser, setDataUser] = useState<Array<User>>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+    // const API = 'http://localhost:5000/api/v1/users';
+    // const [dataUser, setDataUser] = useState<Array<User>>([]);
+    // const [loading, setLoading] = useState(true);
+    // const [error, setError] = useState(false);
 
-    const fetchUsers = async () => {
-        try {
-            const res = await fetch(API);
-            const data = await res.json();
-            setDataUser(data.users);
-        } catch (error) {
-            setError(true);
-        } finally {
-            setLoading(false);
-        }
-    };
+    // const fetchUsers = async () => {
+    //     try {
+    //         const res = await fetch(API);
+    //         const data = await res.json();
+    //         setDataUser(data.users);
+    //     } catch (error) {
+    //         setError(true);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
 
-    useEffect(() => {
-        fetchUsers();
-    }, []);
+    // useEffect(() => {
+    //     fetchUsers();
+    // }, []);
 
     return (
         <div className='xl:w-[88%] lg:w-[84%] md:w-[78%] w-[100%] h-[100%] bg-[#1c5285] p-[12px] pt-[70px]'>
