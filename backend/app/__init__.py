@@ -63,9 +63,9 @@ def user():
             with sqlite3.connect(db_path) as con:
                 cur = con.cursor()
                 #? Consider to bypass password 
-                # cur.execute("SELECT user_id, name, last_name, email FROM users")
+                cur.execute("SELECT user_id, name, last_name, email FROM users")
                 #? Consider to evaluate on-screen password encryption
-                cur.execute("SELECT * FROM users")
+                # cur.execute("SELECT * FROM users")
                 rows = cur.fetchall()
 
             # Convert the retrieved data to a list of dictionaries
@@ -77,7 +77,7 @@ def user():
                     'last_name': row[2],
                     'email': row[3],
                     #? Consider for password
-                    'password': row[4]
+                    # 'password': row[4]
                 }
                 users.append(user)
             #? View in route database
@@ -122,7 +122,7 @@ def update_delete_user(user_id):
                 con.commit()
 
             response = {"message": "User deleted successfully"}
-            return jsonify
+            return jsonify(response)
 
         except Exception as e:
             response = {"error": str(e)}
@@ -138,42 +138,34 @@ def generate_token(length=16):
 def login():
     try:
         data = request.get_json()  # Retrieve JSON data from the request body
-
         # Extract user credentials from the JSON data
         email = data['email']
         password = data['password']
+        hash_password = hashlib.sha256(password.encode()).hexdigest()
 
         # Connect to SQLite3 database and execute the SELECT query
         with sqlite3.connect(db_path) as con:
             cur = con.cursor()
-            cur.execute("SELECT * FROM users WHERE email = ?", (email))
+            cur.execute("SELECT * FROM users WHERE email = ?", (email,))
             user = cur.fetchone()
+            id_db, firstname_db, lastname_db, email_db, password_db = user
 
-        if user is None:
-            response = {"error": "Invalid email or password"}
-            return jsonify(response), 401
-
-        #! Verify the password
-        if hashlib.sha256(password.encode()).hexdigest() == user[4]:
-            # Generate a token
-            token = str(uuid.uuid4())
-
-            # Store the token in the user's record in the database
-            with sqlite3.connect(db_path) as con:
-                cur = con.cursor()
-                cur.execute("UPDATE users SET token = ? WHERE email = ?", (token, email))
-                con.commit()
-
-            response = {"token": token}
-            return jsonify(response), 200
-        else:
-            response = {"error": "Invalid email or password"}
-            return jsonify(response), 401
-        #! detección
+        if user is not None:
+            if hash_password == password_db:
+                # Generate a token
+                token = str(uuid.uuid4())
+                response = {"token": token, "message": 'Authenticated User'}
+                return jsonify(response), 200
+            else:
+                response = {"error": "Invalid email or password"}
+                return jsonify(response), 401
+            
+        response = {"error": "Invalid email or password"}
+        return jsonify(response), 401
 
     except Exception as e:
-        response = {"error": str(e)}
-        return jsonify(response), 500
+        response = {"error": "Invalid email or password"}
+        return jsonify(response), 401
 
 @click.command()
 def runserver():
