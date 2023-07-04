@@ -3,7 +3,6 @@ import useForm from '@/hooks/useForm';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import React, { useState } from 'react';
-import bcrypt from 'bcryptjs'
 
 const SignUp = () => {
 
@@ -29,7 +28,6 @@ const SignUp = () => {
     const handleSubmit = async (event: any) => {
         event.preventDefault()
         try {
-            const hashedPassword = await bcrypt.hash(form.fields.password, 10);
             const response = await axios.post(APIurl, {
                 name: form?.fields.name,
                 last_name: form?.fields.last_name,
