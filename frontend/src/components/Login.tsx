@@ -1,6 +1,8 @@
 'use client'
 import useForm from '@/hooks/useForm';
 import Button from '@mui/material/Button';
+import axios from 'axios';
+import bcrypt from 'bcryptjs'
 import { ok } from 'assert';
 import { useEffect, useState } from 'react';
 import { successAlert } from '../../services/alertServicies';
@@ -12,32 +14,18 @@ interface User {
 }
 
 const Login = () => {
-  // const API = 'http://localhost:5000/api/v1/users';
-  // const [dataUser, setDataUser] = useState<Array<User>>([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(false);
-
-  // const fetchUsers = async () => {
-  //   try {
-  //     const res = await fetch(API);
-  //     const data = await res.json();
-  //     setDataUser(data.users);
-  //     console.log(dataUser)
-  //   } catch (error) {
-  //     setError(true);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-  // useEffect(() => {
-  //   fetchUsers();
-  // }, []);
-
+  const [token, setToken] = useState('');
+  console.log(token)
 
   const initialValues: any = {
     email: "",
     password: ""
   }
+
+  const [credentials, setCredentials] = useState([{
+    email: '',
+    password: ''
+  }])
 
   const placeholder: any = {
     email: "example@email.com",
@@ -45,6 +33,33 @@ const Login = () => {
   }
 
   const form = useForm({ initialValues });
+  const APIurl = 'http://127.0.0.1:5000/api/v1/login'
+
+  // const handleChange = (e: any) => {
+  //   setCredentials({
+  //     ...credentials,
+  //     [e.target.name]: e.target.value
+  //   })
+  // }
+
+  const handleSubmit = async (event: any) => {
+    event.preventDefault()
+    
+    try {
+      const hashedPassword = await bcrypt.hash(form.fields.password, 10);
+      console.log(hashedPassword)
+      const response = await axios.post(APIurl, {
+        email: form?.fields.email,
+        password: form?.fields.password
+      })
+      const data = await response.data
+      const { token } = data;
+      setToken(token)
+    } catch (error) {
+      console.error(error);
+    }
+    console.log(form.fields)
+  }
 
   // const handleSubmit = (event: any) => {
   //   event.preventDefault()
@@ -71,8 +86,10 @@ const Login = () => {
   //   })
   // }
 
+
+
   return (
-    <form  action={'http://localhost:5000/login'} method='POST' className='flex flex-col px-[20px] gap-2'>
+    <form className='flex flex-col px-[20px] gap-2' onSubmit={handleSubmit}>
       <input required type='email' {...form.getInput('email')} placeholder={placeholder.email} className='border-[2px] border-[#1F618D] rounded-md p-2'></input>
       <input required type='password' {...form.getInput('password')} placeholder={placeholder.password} className='border-[2px] border-[#1F618D] rounded-md p-2'></input>
       <Button type='submit' variant="contained" className='bg-[#1F618D]'>Log In</Button>

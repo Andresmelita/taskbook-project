@@ -3,6 +3,7 @@ import useForm from '@/hooks/useForm';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import React, { useState } from 'react';
+import bcrypt from 'bcryptjs'
 
 const SignUp = () => {
 
@@ -11,23 +12,25 @@ const SignUp = () => {
     const initialValues: any = {
         email: "",
         name: "",
-        lastname: "",
+        last_name: "",
         password: "",
     }
 
     const placeholder: any = {
         email: 'example@email.com',
         name: 'John',
-        lastname: 'Doe',
+        last_name: 'Doe',
         password: 'Password',
     }
 
     const form = useForm({ initialValues });
+    const APIurl = 'http://127.0.0.1:5000/api/v1/users'
 
     const handleSubmit = async (event: any) => {
         event.preventDefault()
         try {
-            const response = await axios.post('http://127.0.0.1:5000/api/v1/users', {
+            const hashedPassword = await bcrypt.hash(form.fields.password, 10);
+            const response = await axios.post(APIurl, {
                 name: form?.fields.name,
                 last_name: form?.fields.last_name,
                 email: form?.fields.email,
