@@ -1,8 +1,19 @@
 import sqlite3
+import os
+
+# Specify the folder path
+folder_path = "data"
+
+# Create the folder if it doesn't exist
+if not os.path.exists(folder_path):
+    os.makedirs(folder_path)
+
+# Specify the database file path
+db_path = os.path.join(folder_path, "database.db")
 
 # Connect to SQLite3 database
-conn = sqlite3.connect('database.db')
-print("Connected to database successfully")
+conn = sqlite3.connect(db_path)
+print("Connected to the database successfully")
 
 # Create a cursor object to execute SQL commands
 cursor = conn.cursor()
