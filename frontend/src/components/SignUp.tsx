@@ -17,9 +17,9 @@ const SignUp = () => {
 
     const placeholder: any = {
         email: 'example@email.com',
-        name: 'John',
-        last_name: 'Doe',
-        password: 'Password',
+        name: 'name',
+        last_name: 'lastname',
+        password: 'password',
     }
 
     const form = useForm({ initialValues });
@@ -57,12 +57,12 @@ const SignUp = () => {
                     <input required type='email' {...form.getInput('email')} placeholder={placeholder.email} className='border-[2px] border-[#1F618D] rounded-md p-2'></input>
                     <div className="flex w-[100%] gap-2">
                         <input required type='text' {...form.getInput('name')} placeholder={placeholder.name} className='w-[50%] border-[2px] border-[#1F618D] rounded-md p-2'></input>
-                        <input required type='text' {...form.getInput('last_name')} placeholder={placeholder.lastname} className='w-[50%] border-[2px] border-[#1F618D] rounded-md p-2'></input>
+                        <input required type='text' {...form.getInput('last_name')} placeholder={placeholder.last_name} className='w-[50%] border-[2px] border-[#1F618D] rounded-md p-2'></input>
                     </div>
                     <input required type='password' {...form.getInput('password')} placeholder={placeholder.password} alt="strongPass" className='border-[2px] border-[#1F618D] rounded-md p-2'></input>
                     <Button type='submit' variant="contained" className='bg-[#1F618D]'>Sign Up</Button>
                 </div>}
-
+-
         </form>
     )
 }
