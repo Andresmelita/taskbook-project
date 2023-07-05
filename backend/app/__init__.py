@@ -3,6 +3,7 @@ from flask_cors import CORS, cross_origin
 # from werkzeug.exceptions import Unauthorized, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
+
 import click
 import random
 import string
@@ -169,7 +170,7 @@ def login():
                 resp = make_response(response)
 
                 # Set the cookie with the token
-                resp.set_cookie('cookieUser', token, max_age=86400)
+                resp.set_cookie('cookieUser', token, max_age=86400, samesite='None', secure=True)
                 print(resp.headers)
                 return resp
             else:

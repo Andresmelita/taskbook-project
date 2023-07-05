@@ -1,12 +1,15 @@
 'use client'
 import useForm from '@/hooks/useForm';
 import Button from '@mui/material/Button';
+import Cookie from 'js-cookie';
 import axios from 'axios';
 // import bcrypt from 'bcryptjs'
 import { ok } from 'assert';
 import { useEffect, useState } from 'react';
 import { successAlert } from '../../services/alertServicies';
 import Swal from 'sweetalert2';
+import { login } from '../../services/auth.services';
+import Cookies from 'js-cookie';
 
 interface User {
   email: string;
@@ -16,10 +19,7 @@ interface User {
 const Login = () => {
   const [token, setToken] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(true);
-  console.log(token)
-  
-
-  const initialValues: any = {
+  const initialValues: User = {
     email: "",
     password: "",
   }
@@ -30,32 +30,31 @@ const Login = () => {
   }
 
   const form = useForm({ initialValues });
-  const APIurl = 'http://127.0.0.1:5000/api/v1/login'
 
   const handleSubmit = async (event: any) => {
     event.preventDefault()
-    try {
-      const response = await axios.post(APIurl, {
-        email: form?.fields.email,
-        password: form?.fields.password
-      }, { 
-        withCredentials: true,
-        headers: {
-          'Set-Cookie': 'cookieName=cookieValue; SameSite=None; Secure'
-        }
+    console.log(form.fields)
+    login({
+      email: form?.fields.email,
+      password: form?.fields.password
+    })
+      .then((response) => {
+        Cookie.set('userCookie', response.data.token)
+        console.log(response.data)
+        successAlert()
+        if (response.data.message == 'Authenticated User'){
+          setIsAuthenticated(true)
+          setToken(response.data.token)
+        } else {setIsAuthenticated(false)}
       })
-      const data = await response.data
-      //? Respuesta del backend
-      console.log(response.data)
-      if (response.data.message == 'Authenticated User'){
-        setIsAuthenticated(true)
-      } else {setIsAuthenticated(false)}
-      const { token } = data;
-      successAlert()
-    } catch (error) {
-      setIsAuthenticated(false)
-      console.error(error);
-    }
+      .catch((error) => {
+        console.log(error);
+        setIsAuthenticated(false)
+      })
+      setTimeout(function () {
+          window.location.href = '/user';
+        }, 2200);
+
   }
 
   return (
