@@ -22,7 +22,7 @@ db_path = os.path.join(folder_path, 'database.db')
 
 # Connect to the SQLite database using the absolute path
 conn = sqlite3.connect(db_path)
-CORS(app, origins='http://localhost:3000', supports_credentials=True)
+CORS(app, origins=['http://localhost:3000', 'https://tasbook-project.vercel.app/'], supports_credentials=True)
 
 
 @app.route('/')
