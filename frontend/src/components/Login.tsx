@@ -15,8 +15,9 @@ interface User {
 
 const Login = () => {
   const [token, setToken] = useState('');
-  const [firstAttempt, setFirstAttempt] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   console.log(token)
+  
 
   const initialValues: any = {
     email: "",
@@ -37,17 +38,22 @@ const Login = () => {
       const response = await axios.post(APIurl, {
         email: form?.fields.email,
         password: form?.fields.password
+      }, { 
+        withCredentials: true,
+        headers: {
+          'Set-Cookie': 'cookieName=cookieValue; SameSite=None; Secure'
+        }
       })
       const data = await response.data
       //? Respuesta del backend
       console.log(response.data)
       if (response.data.message == 'Authenticated User'){
-        setFirstAttempt(false)
-      } else {setFirstAttempt(true)}
+        setIsAuthenticated(true)
+      } else {setIsAuthenticated(false)}
       const { token } = data;
       successAlert()
     } catch (error) {
-      setFirstAttempt(true)
+      setIsAuthenticated(false)
       console.error(error);
     }
   }
@@ -59,7 +65,7 @@ const Login = () => {
         <input required type='password' {...form.getInput('password')} placeholder={placeholder.password} className='border-[2px] border-[#1F618D] rounded-md p-2'></input>
         <Button type='submit' variant="contained" className='bg-[#1F618D]'>Log In</Button>
       </form>
-      {!firstAttempt ? <div></div> : <div className='pt-[10px] text-[#922828]'>Wrong email or password</div>}
+      {isAuthenticated ? <div></div> : <div className='pt-[10px] text-[#922828]'>Wrong email or password</div>}
     </div>
 
   )
