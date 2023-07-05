@@ -13,6 +13,7 @@ import os
 
 app = Flask(__name__)
 
+
 # Specify the folder path
 folder_path = "data"
 
@@ -23,9 +24,11 @@ db_path = os.path.join(folder_path, 'database.db')
 conn = sqlite3.connect(db_path)
 CORS(app, origins='http://localhost:3000', supports_credentials=True)
 
+
 @app.route('/')
 def index():
     return {'status': 'Ok'}
+
 
 @cross_origin
 @app.route("/api/v1/users", methods=['POST', 'GET'])
@@ -56,15 +59,16 @@ def user():
         except Exception as e:
             response = {"error": str(e)}
             return jsonify(response), 500
-        
+
     elif request.method == 'GET':
         try:
             # Connect to SQLite3 database and execute the SELECT
             with sqlite3.connect(db_path) as con:
                 cur = con.cursor()
-                #? Consider to bypass password 
-                cur.execute("SELECT user_id, name, last_name, email FROM users")
-                #? Consider to evaluate on-screen password encryption
+                # ? Consider to bypass password
+                cur.execute(
+                    "SELECT user_id, name, last_name, email FROM users")
+                # ? Consider to evaluate on-screen password encryption
                 # cur.execute("SELECT * FROM users")
                 rows = cur.fetchall()
 
@@ -76,16 +80,17 @@ def user():
                     'name': row[1],
                     'last_name': row[2],
                     'email': row[3],
-                    #? Consider for password
+                    # ? Consider for password
                     # 'password': row[4]
                 }
                 users.append(user)
-            #? View in route database
+            # ? View in route database
             response = {"users": users}
             return jsonify(response), 200
         except Exception as e:
             response = {"error": str(e)}
             return jsonify(response), 500
+
 
 @cross_origin
 @app.route("/api/v1/users/<user_id>", methods=['PUT', 'DELETE'])
@@ -128,10 +133,13 @@ def update_delete_user(user_id):
             response = {"error": str(e)}
             return jsonify(response), 500
 
-#Simulation of token
+# Simulation of token
+
+
 def generate_token(length=16):
     chars = string.ascii_letters + string.digits
     return ''.join(random.choice(chars) for _ in range(length))
+
 
 @cross_origin
 @app.route("/api/v1/login", methods=['POST'])
@@ -153,13 +161,21 @@ def login():
         if user is not None:
             if hash_password == password_db:
                 # Generate a token
-                token = str(uuid.uuid4())
-                response = {"token": token, "message": 'Authenticated User'}
-                return jsonify(response), 200
+                # token = str(uuid.uuid4())
+                # In this case, the token will be the user_id
+                token = id_db
+                response = {"message": 'Authenticated User', "token": token}
+                # Create a response with the JSON data
+                resp = make_response(response)
+
+                # Set the cookie with the token
+                resp.set_cookie('cookieUser', token, max_age=86400)
+                print(resp.headers)
+                return resp
             else:
                 response = {"error": "Invalid email or password"}
                 return jsonify(response), 401
-            
+
         response = {"error": "Invalid email or password"}
         return jsonify(response), 401
 
@@ -167,9 +183,11 @@ def login():
         response = {"error": "Invalid email or password"}
         return jsonify(response), 401
 
+
 @click.command()
 def runserver():
     app.run(debug=True, port='5000')
+
 
 if __name__ == '__main__':
     runserver()
