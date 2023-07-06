@@ -21,7 +21,7 @@ const BookBoard = () => {
                         <div className="flex md:hidden">
                         </div>
                     </div> */}
-                    {/* <form className="w-[100%] h-[100%]" id='formTask' onSubmit={handleSubmit}>
+                    <form className="w-[100%] h-[100%]" id='formTask'>
                         <div className='font-bold text-[#1c5285] flex justify-center text-[16px] w-[100%] pl-[10px] hover:scale-110 ease-in-out duration-300'>
                             <button type="submit" className='cursor-pointer py-[10px]'>
                                 Agregar Tarea
@@ -29,12 +29,12 @@ const BookBoard = () => {
                             </button>
                         </div>
                         <div className="form-group h-[20%]w-[100%] flex items-center justify-center">
-                            <input {...form.getInput('title')} className='form-control h-[90%] w-[80%] rounded-[10px] p-[6px]' type="text" id="title" placeholder="Add a to do" />
+                            <input className='form-control h-[90%] w-[80%] rounded-[10px] p-[6px]' type="text" id="title" placeholder="Add a to do" />
                         </div>
                         <div className="form-group h-[50%] w-[100%] flex items-center justify-center">
-                            <textarea {...form.getInput('description')} id="description" placeholder="Add a description" className="h-[90%] w-[80%] p-[6px] rounded-[10px] form-control"></textarea>
+                            <textarea id="description" placeholder="Add a description" className="h-[90%] w-[80%] p-[6px] rounded-[10px] form-control"></textarea>
                         </div>
-                    </form> */}
+                    </form>
 
                 </div>
                 {/* <div className="hover:scale-110 ease-in-out duration-300 ">
