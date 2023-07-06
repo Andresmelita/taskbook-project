@@ -32,7 +32,7 @@ print("Created the 'users' table successfully!")
 
 # Create a table of books
 cursor.execute('''
-    CREATE TABLE books
+    CREATE TABLE IF NOT EXISTS books
     (id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER,
     title TEXT,

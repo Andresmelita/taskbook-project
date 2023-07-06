@@ -134,12 +134,49 @@ def update_delete_user(user_id):
             response = {"error": str(e)}
             return jsonify(response), 500
 
-# Simulation of token
 
+def get_db_connection():
+    connection = sqlite3.connect(db_path)
+    connection.row_factory = sqlite3.Row
+    return connection
 
-def generate_token(length=16):
-    chars = string.ascii_letters + string.digits
-    return ''.join(random.choice(chars) for _ in range(length))
+def get_max_index_num(user_id):
+    conn = get_db_connection()
+    cursor = conn.execute('SELECT MAX(index_num) FROM books WHERE user_id = ?', (user_id,))
+    max_index_num = cursor.fetchone()[0]
+    conn.close()
+    return max_index_num
+
+@app.route("/api/v1/users/<int:user_id>/books", methods=['POST', 'GET'])
+def user_books(user_id):
+    if request.method == 'POST':
+        # Retrieve book data from request payload
+        book_data = request.get_json()
+        title = book_data.get('title')
+        description = book_data.get('description')
+        color = book_data.get('color')
+        tasks = book_data.get('tasks')
+
+        conn = get_db_connection()
+        max_index_num = get_max_index_num(user_id)
+        index_num = max_index_num + 1 if max_index_num else 1
+        creation = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+        conn.execute('''INSERT INTO books (user_id, title, description, creation, color, index_num, tasks)
+                        VALUES (?, ?, ?, ?, ?, ?, ?)''',
+                    (user_id, title, description, creation, color, index_num, tasks))
+        conn.commit()
+        conn.close()
+
+        return jsonify({'message': 'Book created successfully'}), 201
+
+    elif request.method == 'GET':
+        conn = get_db_connection()
+        cursor = conn.execute('SELECT * FROM books WHERE user_id = ?', (user_id,))
+        books = [dict(row) for row in cursor.fetchall()]
+        conn.close()
+
+        return jsonify(books), 200
 
 
 @cross_origin
