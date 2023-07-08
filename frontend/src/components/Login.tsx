@@ -46,14 +46,15 @@ const Login = () => {
           setIsAuthenticated(true)
           setToken(response.data.token)
         } else {setIsAuthenticated(false)}
+        setTimeout(function () {
+          window.location.href = '/user';
+        }, 2200);
       })
       .catch((error) => {
         console.log(error);
         setIsAuthenticated(false)
       })
-      setTimeout(function () {
-          window.location.href = '/user';
-        }, 2200);
+
 
   }
 
