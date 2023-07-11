@@ -155,16 +155,15 @@ def user_books(user_id):
         title = book_data.get('title')
         description = book_data.get('description')
         color = book_data.get('color')
-        tasks = book_data.get('tasks')
 
         conn = get_db_connection()
         max_index_num = get_max_index_num(user_id)
         index_num = max_index_num + 1 if max_index_num else 1
         creation = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-        conn.execute('''INSERT INTO books (user_id, title, description, creation, color, index_num, tasks)
+        conn.execute('''INSERT INTO books (user_id, title, description, creation, color, index_num)
                         VALUES (?, ?, ?, ?, ?, ?, ?)''',
-                    (user_id, title, description, creation, color, index_num, tasks))
+                    (user_id, title, description, creation, color, index_num))
         conn.commit()
         conn.close()
 

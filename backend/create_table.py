@@ -40,7 +40,6 @@ cursor.execute('''
     creation DATE,
     color TEXT,
     index_num INTEGER,
-    tasks TEXT,
     FOREIGN KEY(user_id) REFERENCES users(id))
 ''')
 print("Created the 'books' table successfully!")
